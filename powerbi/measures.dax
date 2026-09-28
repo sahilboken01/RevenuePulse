@@ -1,0 +1,155 @@
+// Create each expression as a New measure in Power BI. Amounts are BRL GMV.
+
+Total GMV (BRL) = SUM ( FactOrder[order_gmv] )
+
+Delivered Orders = DISTINCTCOUNT ( FactOrder[order_id] )
+
+Average Order Value (BRL) = DIVIDE ( [Total GMV (BRL)], [Delivered Orders] )
+
+Active Buyers = DISTINCTCOUNT ( FactOrder[customer_unique_id] )
+
+Observed Buyers = DISTINCTCOUNT ( DimCustomer[customer_unique_id] )
+
+One-time Buyers =
+CALCULATE (
+    DISTINCTCOUNT ( DimCustomer[customer_unique_id] ),
+    DimCustomer[purchase_type] = "one-time"
+)
+
+Repeat Buyers =
+CALCULATE (
+    DISTINCTCOUNT ( DimCustomer[customer_unique_id] ),
+    DimCustomer[purchase_type] = "repeat"
+)
+
+Observed Repeat Purchase Rate =
+VAR RepeatCount =
+    CALCULATE (
+        DISTINCTCOUNT ( DimCustomer[customer_unique_id] ),
+        REMOVEFILTERS ( DimCustomer ),
+        DimCustomer[purchase_type] = "repeat"
+    )
+VAR BuyerCount =
+    CALCULATE (
+        DISTINCTCOUNT ( DimCustomer[customer_unique_id] ),
+        REMOVEFILTERS ( DimCustomer )
+    )
+RETURN DIVIDE ( RepeatCount, BuyerCount )
+
+New Customer Orders =
+CALCULATE (
+    [Delivered Orders],
+    FactOrder[customer_order_type] = "new customer order"
+)
+
+Returning Customer Orders =
+CALCULATE (
+    [Delivered Orders],
+    FactOrder[customer_order_type] = "returning customer order"
+)
+
+Average Revenue per Customer (BRL) =
+DIVIDE ( [Total GMV (BRL)], DISTINCTCOUNT ( FactOrder[customer_unique_id] ) )
+
+GMV by RFM Segment (BRL) = [Total GMV (BRL)]
+
+RFM Segment Customers = DISTINCTCOUNT ( DimCustomer[customer_unique_id] )
+
+Category GMV (BRL) = SUM ( FactSalesItem[item_price] )
+
+Category Orders = DISTINCTCOUNT ( FactSalesItem[order_id] )
+
+Average Category Spend per Order (BRL) =
+DIVIDE ( [Category GMV (BRL)], [Category Orders] )
+
+Average Item Value (BRL) =
+DIVIDE ( [Category GMV (BRL)], COUNTROWS ( FactSalesItem ) )
+
+Category Orders (Economics) = SUM ( FactCategoryEconomics[category_orders] )
+
+Category GMV (Economics, BRL) = SUM ( FactCategoryEconomics[category_gmv] )
+
+Average Category Order Value (Economics, BRL) =
+AVERAGE ( FactCategoryEconomics[average_category_order_value] )
+
+Item GMV (BRL) = SUM ( FactSalesItem[item_price] )
+
+Top 10 Seller GMV (BRL) =
+VAR TopSellers =
+    TOPN (
+        10,
+        ALL ( DimSeller[seller_id] ),
+        [Item GMV (BRL)], DESC,
+        DimSeller[seller_id], ASC
+    )
+RETURN CALCULATE ( [Item GMV (BRL)], KEEPFILTERS ( TopSellers ) )
+
+Top 10 Seller GMV Share =
+DIVIDE (
+    [Top 10 Seller GMV (BRL)],
+    CALCULATE ( [Item GMV (BRL)], REMOVEFILTERS ( DimSeller[seller_id] ) )
+)
+
+Top 20 Seller GMV (BRL) =
+VAR TopSellers =
+    TOPN (
+        20,
+        ALL ( DimSeller[seller_id] ),
+        [Item GMV (BRL)], DESC,
+        DimSeller[seller_id], ASC
+    )
+RETURN CALCULATE ( [Item GMV (BRL)], KEEPFILTERS ( TopSellers ) )
+
+Top 20 Seller GMV Share =
+DIVIDE (
+    [Top 20 Seller GMV (BRL)],
+    CALCULATE ( [Item GMV (BRL)], REMOVEFILTERS ( DimSeller[seller_id] ) )
+)
+
+Active Sellers = DISTINCTCOUNT ( FactSalesItem[seller_id] )
+
+Average Delivery Days = AVERAGE ( FactOrder[delivery_days] )
+
+Late Orders =
+CALCULATE (
+    DISTINCTCOUNT ( FactOrder[order_id] ),
+    FactOrder[late_flag] = 1
+)
+
+Orders Eligible for Late Rate =
+CALCULATE (
+    DISTINCTCOUNT ( FactOrder[order_id] ),
+    FILTER ( FactOrder, NOT ISBLANK ( FactOrder[late_flag] ) )
+)
+
+Late Delivery Rate = DIVIDE ( [Late Orders], [Orders Eligible for Late Rate] )
+
+Average Order Review Score = AVERAGE ( FactOrder[order_average_review_score] )
+
+Average Delivery Days by Category =
+AVERAGE ( FactOrderCategoryDelivery[delivery_days] )
+
+Late Delivery Rate by Category or State =
+VAR LateCount =
+    CALCULATE (
+        DISTINCTCOUNT ( FactOrderCategoryDelivery[order_id] ),
+        FactOrderCategoryDelivery[late_flag] = 1
+    )
+VAR EligibleCount =
+    CALCULATE (
+        DISTINCTCOUNT ( FactOrderCategoryDelivery[order_id] ),
+        FILTER (
+            FactOrderCategoryDelivery,
+            NOT ISBLANK ( FactOrderCategoryDelivery[late_flag] )
+        )
+    )
+RETURN DIVIDE ( LateCount, EligibleCount )
+
+Average Review Score by Delivery Bucket =
+AVERAGE ( FactOrder[order_average_review_score] )
+
+Cohort Retention Rate = MAX ( FactCohortRetention[retention_rate] )
+
+Cohort Active Buyers = MAX ( FactCohortRetention[active_customers] )
+
+Cohort Starting Buyers = MAX ( FactCohortRetention[cohort_size] )

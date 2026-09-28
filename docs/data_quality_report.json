@@ -1,0 +1,262 @@
+{
+  "dataset": "Brazilian E-Commerce Public Dataset by Olist",
+  "table_reports": {
+    "customers": {
+      "source_file": "olist_customers_dataset.csv",
+      "rows_before": 99441,
+      "rows_after": 99441,
+      "exact_duplicate_rows_removed": 0,
+      "columns": {
+        "customer_id": "object",
+        "customer_unique_id": "object",
+        "customer_zip_code_prefix": "int64",
+        "customer_city": "object",
+        "customer_state": "object"
+      },
+      "missing_values_after_deduplication": {},
+      "invalid_dates_set_null": {},
+      "invalid_numeric_values_set_null": {},
+      "negative_currency_values_set_null": {},
+      "text_values_normalized": {}
+    },
+    "geolocation": {
+      "source_file": "olist_geolocation_dataset.csv",
+      "rows_before": 1000163,
+      "rows_after": 738332,
+      "exact_duplicate_rows_removed": 261831,
+      "columns": {
+        "geolocation_zip_code_prefix": "int64",
+        "geolocation_lat": "float64",
+        "geolocation_lng": "float64",
+        "geolocation_city": "object",
+        "geolocation_state": "object"
+      },
+      "missing_values_after_deduplication": {},
+      "invalid_dates_set_null": {},
+      "invalid_numeric_values_set_null": {},
+      "negative_currency_values_set_null": {},
+      "text_values_normalized": {}
+    },
+    "order_items": {
+      "source_file": "olist_order_items_dataset.csv",
+      "rows_before": 112650,
+      "rows_after": 112650,
+      "exact_duplicate_rows_removed": 0,
+      "columns": {
+        "order_id": "object",
+        "order_item_id": "int64",
+        "product_id": "object",
+        "seller_id": "object",
+        "shipping_limit_date": "datetime64[ns]",
+        "price": "float64",
+        "freight_value": "float64"
+      },
+      "missing_values_after_deduplication": {},
+      "invalid_dates_set_null": {
+        "shipping_limit_date": 0
+      },
+      "invalid_numeric_values_set_null": {
+        "price": 0,
+        "freight_value": 0
+      },
+      "negative_currency_values_set_null": {
+        "price": 0,
+        "freight_value": 0
+      },
+      "text_values_normalized": {}
+    },
+    "order_payments": {
+      "source_file": "olist_order_payments_dataset.csv",
+      "rows_before": 103886,
+      "rows_after": 103886,
+      "exact_duplicate_rows_removed": 0,
+      "columns": {
+        "order_id": "object",
+        "payment_sequential": "int64",
+        "payment_type": "object",
+        "payment_installments": "int64",
+        "payment_value": "float64"
+      },
+      "missing_values_after_deduplication": {},
+      "invalid_dates_set_null": {},
+      "invalid_numeric_values_set_null": {
+        "payment_value": 0
+      },
+      "negative_currency_values_set_null": {
+        "payment_value": 0
+      },
+      "text_values_normalized": {
+        "payment_type": 0
+      }
+    },
+    "order_reviews": {
+      "source_file": "olist_order_reviews_dataset.csv",
+      "rows_before": 99224,
+      "rows_after": 99224,
+      "exact_duplicate_rows_removed": 0,
+      "columns": {
+        "review_id": "object",
+        "order_id": "object",
+        "review_score": "int64",
+        "review_comment_title": "object",
+        "review_comment_message": "object",
+        "review_creation_date": "datetime64[ns]",
+        "review_answer_timestamp": "datetime64[ns]"
+      },
+      "missing_values_after_deduplication": {
+        "review_comment_title": 87656,
+        "review_comment_message": 58247
+      },
+      "invalid_dates_set_null": {
+        "review_creation_date": 0,
+        "review_answer_timestamp": 0
+      },
+      "invalid_numeric_values_set_null": {},
+      "negative_currency_values_set_null": {},
+      "text_values_normalized": {}
+    },
+    "orders": {
+      "source_file": "olist_orders_dataset.csv",
+      "rows_before": 99441,
+      "rows_after": 99441,
+      "exact_duplicate_rows_removed": 0,
+      "columns": {
+        "order_id": "object",
+        "customer_id": "object",
+        "order_status": "object",
+        "order_purchase_timestamp": "datetime64[ns]",
+        "order_approved_at": "datetime64[ns]",
+        "order_delivered_carrier_date": "datetime64[ns]",
+        "order_delivered_customer_date": "datetime64[ns]",
+        "order_estimated_delivery_date": "datetime64[ns]"
+      },
+      "missing_values_after_deduplication": {
+        "order_approved_at": 160,
+        "order_delivered_carrier_date": 1783,
+        "order_delivered_customer_date": 2965
+      },
+      "invalid_dates_set_null": {
+        "order_purchase_timestamp": 0,
+        "order_approved_at": 0,
+        "order_delivered_carrier_date": 0,
+        "order_delivered_customer_date": 0,
+        "order_estimated_delivery_date": 0
+      },
+      "invalid_numeric_values_set_null": {},
+      "negative_currency_values_set_null": {},
+      "text_values_normalized": {
+        "order_status": 0
+      }
+    },
+    "products": {
+      "source_file": "olist_products_dataset.csv",
+      "rows_before": 32951,
+      "rows_after": 32951,
+      "exact_duplicate_rows_removed": 0,
+      "columns": {
+        "product_id": "object",
+        "product_category_name": "object",
+        "product_name_lenght": "float64",
+        "product_description_lenght": "float64",
+        "product_photos_qty": "float64",
+        "product_weight_g": "float64",
+        "product_length_cm": "float64",
+        "product_height_cm": "float64",
+        "product_width_cm": "float64"
+      },
+      "missing_values_after_deduplication": {
+        "product_category_name": 610,
+        "product_name_lenght": 610,
+        "product_description_lenght": 610,
+        "product_photos_qty": 610,
+        "product_weight_g": 2,
+        "product_length_cm": 2,
+        "product_height_cm": 2,
+        "product_width_cm": 2
+      },
+      "invalid_dates_set_null": {},
+      "invalid_numeric_values_set_null": {},
+      "negative_currency_values_set_null": {},
+      "text_values_normalized": {
+        "product_category_name": 0
+      }
+    },
+    "sellers": {
+      "source_file": "olist_sellers_dataset.csv",
+      "rows_before": 3095,
+      "rows_after": 3095,
+      "exact_duplicate_rows_removed": 0,
+      "columns": {
+        "seller_id": "object",
+        "seller_zip_code_prefix": "int64",
+        "seller_city": "object",
+        "seller_state": "object"
+      },
+      "missing_values_after_deduplication": {},
+      "invalid_dates_set_null": {},
+      "invalid_numeric_values_set_null": {},
+      "negative_currency_values_set_null": {},
+      "text_values_normalized": {}
+    },
+    "category_translation": {
+      "source_file": "product_category_name_translation.csv",
+      "rows_before": 71,
+      "rows_after": 71,
+      "exact_duplicate_rows_removed": 0,
+      "columns": {
+        "product_category_name": "object",
+        "product_category_name_english": "object"
+      },
+      "missing_values_after_deduplication": {},
+      "invalid_dates_set_null": {},
+      "invalid_numeric_values_set_null": {},
+      "negative_currency_values_set_null": {},
+      "text_values_normalized": {
+        "product_category_name": 0,
+        "product_category_name_english": 0
+      }
+    }
+  },
+  "foreign_key_orphan_rows": {
+    "orders.customer_id": 0,
+    "order_items.order_id": 0,
+    "order_items.product_id": 0,
+    "order_items.seller_id": 0,
+    "order_payments.order_id": 0,
+    "order_reviews.order_id": 0,
+    "products.product_category_name": 13
+  },
+  "distinct_order_statuses": [
+    "approved",
+    "canceled",
+    "created",
+    "delivered",
+    "invoiced",
+    "processing",
+    "shipped",
+    "unavailable"
+  ],
+  "distinct_payment_types": [
+    "boleto",
+    "credit_card",
+    "debit_card",
+    "not_defined",
+    "voucher"
+  ],
+  "product_categories_without_translation": [
+    "pc_gamer",
+    "portateis_cozinha_e_preparadores_de_alimentos"
+  ],
+  "order_date_chronology_violations": {
+    "approval_before_purchase": 0,
+    "carrier_delivery_before_purchase": 166,
+    "customer_delivery_before_carrier_delivery": 23,
+    "customer_delivery_before_purchase": 0
+  },
+  "notes": [
+    "Missing values are reported, not imputed.",
+    "Orphan foreign keys are reported; rows are retained.",
+    "Negative item price/freight/payment values are set to null; rows are retained.",
+    "No profit, cost, discount, or return values are created."
+  ]
+}

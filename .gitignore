@@ -1,0 +1,18 @@
+# Source data and generated outputs
+data/raw/*
+data/processed/*
+!data/raw/.gitkeep
+!data/processed/.gitkeep
+
+# Local configuration and database credentials
+.env
+*.local
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+
+# Power BI local/temp artifacts
+*.pbix.autosave
